@@ -11,7 +11,11 @@ interface Game {
   title: string;
 }
 
-export function CreateAdmodal( ) {
+interface Props {
+  closeModal: () => null;
+}
+
+export function CreateAdmodal({closeModal}: Props ) {
 
   const [games, setGames] = useState<Game[]>([])
   const [weekDays,setWeekDays] = useState<string[]>([])
@@ -22,6 +26,9 @@ export function CreateAdmodal( ) {
         setGames(response.data)
       })
     }, [])
+
+
+    
 
     async function handleCreateAd(event : FormEvent) {
       event.preventDefault()
@@ -43,7 +50,9 @@ export function CreateAdmodal( ) {
         hourEnd: data.hourEnd,
         useVoiceChannel: useVoiceChannel
       })
-
+      closeModal()
+      setWeekDays([])
+      setUseVoiceChannel(false)
       alert('Anúncio criado com sucesso')
       }catch (err) {
         alert('Erro ao criar anúncio')

@@ -18,9 +18,15 @@ interface Game {
 }
 
 
+
 function App() {
   const [games, setGames] = useState<Game[]>([])
   const [dialogControl, setDialogControl] = useState(false)
+
+  function close() {
+    setDialogControl(false)
+    return null
+  }
 
   useEffect(()=> {
     axios('http://localhost:3333/games').then(response => {
@@ -45,9 +51,9 @@ function App() {
        
       </div>
 
-      <Dialog.Root >
+      <Dialog.Root open={dialogControl} onOpenChange={setDialogControl}>
         <CreateAdBanner />
-        <CreateAdmodal  />
+        <CreateAdmodal closeModal={close} />
         
       </Dialog.Root>
       
